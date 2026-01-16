@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Warm Greeting</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #1a1a2e, #000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    /* Floating particles */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(-10vh);
+        opacity: 1;
+      }
+    }
+
+    .card {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 40px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      width: 340px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-weight: 600;
+      background: linear-gradient(90deg, #00f2fe, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(90deg, #ff8a00, #e52e71);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .greeting {
+      margin-top: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: none;
+    }
+
+    .greeting.show {
+      animation: fadeUp 1s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .main-text {
+      font-size: 34px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #fddb92, #d1fdff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sub-text {
+      margin-top: 10px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particles -->
+  <script>
+    for (let i = 0; i < 45; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.animationDuration = 5 + Math.random() * 10 + "s";
+      p.style.animationDelay = Math.random() * 5 + "s";
+      document.body.appendChild(p);
+    }
+  </script>
+
+  <div class="card">
+    <h2 id="title">What’s your name?</h2>
+    <input id="nameInput" placeholder="Enter your name" />
+    <button id="btn" onclick="greet()">Continue</button>
+
+    <div id="greeting" class="greeting">
+      <div class="main-text" id="mainText"></div>
+      <div class="sub-text" id="subText"></div>
+    </div>
+  </div>
+
+  <script>
+    const messages = [
+      name => ({
+        main: `Hi, ${name}! 🌟`,
+        sub: "You just made this screen happier by being here."
+      }),
+      name => ({
+        main: `Hey ${name}! 😊`,
+        sub: "Hope today treats you kindly — you deserve it."
+      }),
+      name => ({
+        main: `Welcome, ${name}!`,
+        sub: "Fun fact: entering your name already increased the vibe by 37%."
+      }),
+      name => ({
+        main: `Hello ${name}! ✨`,
+        sub: "Take a deep breath. You're doing better than you think."
+      }),
+      name => ({
+        main: `Yo ${name}! 😄`,
+        sub: "If smiles were pixels, this page would be glowing right now."
+      })
+    ];
+
+    function greet() {
+      const name = document.getElementById("nameInput").value.trim();
+      if (!name) return;
+
+      document.getElementById("title").style.display = "none";
+      document.getElementById("nameInput").style.display = "none";
+      document.getElementById("btn").style.display = "none";
+
+      const pick = messages[Math.floor(Math.random() * messages.length)](name);
+
+      document.getElementById("mainText").textContent = pick.main;
+      document.getElementById("subText").textContent = pick.sub;
+
+      document.getElementById("greeting").classList.add("show");
+    }
+  </script>
+
+</body>
+</html>
