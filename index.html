@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7JQ6P5HPW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Q7JQ6P5HPW');
+  </script>
+
   <meta charset="UTF-8">
   <title>Warm Greeting</title>
 
@@ -90,11 +99,14 @@
       cursor: pointer;
     }
 
+    button:hover {
+      opacity: 0.9;
+    }
+
     .greeting {
       margin-top: 20px;
       opacity: 0;
       transform: translateY(30px);
-      animation: none;
     }
 
     .greeting.show {
@@ -125,7 +137,7 @@
 </head>
 <body>
 
-  <!-- Particles -->
+  <!-- Floating particles -->
   <script>
     for (let i = 0; i < 45; i++) {
       const p = document.createElement("div");
@@ -152,7 +164,7 @@
     const messages = [
       name => ({
         main: `Hi, ${name}! 🌟`,
-        sub: "You just made this screen happier by being here."
+        sub: "You just made this page a little brighter by being here."
       }),
       name => ({
         main: `Hey ${name}! 😊`,
@@ -160,21 +172,29 @@
       }),
       name => ({
         main: `Welcome, ${name}!`,
-        sub: "Fun fact: entering your name already increased the vibe by 37%."
+        sub: "Entering your name increased the good vibes by 37%."
       }),
       name => ({
         main: `Hello ${name}! ✨`,
-        sub: "Take a deep breath. You're doing better than you think."
+        sub: "Take a breath. You're doing better than you think."
       }),
       name => ({
         main: `Yo ${name}! 😄`,
-        sub: "If smiles were pixels, this page would be glowing right now."
+        sub: "If smiles were pixels, this screen would be glowing."
       })
     ];
 
     function greet() {
       const name = document.getElementById("nameInput").value.trim();
       if (!name) return;
+
+      // GA custom event
+      if (typeof gtag === "function") {
+        gtag('event', 'name_submitted', {
+          event_category: 'engagement',
+          event_label: 'Greeting shown'
+        });
+      }
 
       document.getElementById("title").style.display = "none";
       document.getElementById("nameInput").style.display = "none";
